@@ -6,7 +6,4 @@ def create_app():
     
     app.register_blueprint(user_bp)
     
-    app.run(debug=True)
-
-if __name__== "__main__":
-    create_app()
+    return app

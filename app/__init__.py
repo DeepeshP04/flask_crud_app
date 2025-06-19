@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_pymongo import PyMongo
+from .extensions import mongo
 from .api.users import user_bp
 from dotenv import load_dotenv
 import os
@@ -7,12 +7,12 @@ import os
 load_dotenv(dotenv_path="../.env")
 
 def create_app():
-    DB_URL = os.getenv("MONGODB_URL")
+    DB_NAME = os.getenv("DB_NAME")
     
     # Create flask app
     app = Flask(__name__)
-    app.config["Mongo_URI"] = f"mongo://localhost:27017/{DB_URL}"
-    mongo = PyMongo(app)
+    app.config["MONGO_URI"] = f"mongodb://localhost:27017/{DB_NAME}"
+    mongo.init_app(app)
     
     # Register blueprints
     app.register_blueprint(user_bp)

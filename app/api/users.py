@@ -38,7 +38,7 @@ def create_user():
     return jsonify({"message": "User created successfully.", "user": user}), 201
 
 # Update the user data
-@user_bp.route("/id")
+@user_bp.route("/id", methods=["PUT"])
 def update_user_data(id):
     data = request.get_json()
     name = data.get("name")
@@ -53,4 +53,12 @@ def update_user_data(id):
     if result.matched_count() > 0:
         return jsonify({"message": "User details updated."}), 200
     else: 
+        return jsonify({"error": "User not found."}), 404
+    
+@user_bp.route("/id", methods=["DELETE"])
+def delete_user(id):
+    user = mongo.db.users.delete_one({"_id": ObjectId(id)})
+    if user.deleted_count == 1:
+        return jsonify({"message": "User deleted successfully."}), 200
+    else:
         return jsonify({"error": "User not found."}), 404

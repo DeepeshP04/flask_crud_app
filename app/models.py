@@ -7,4 +7,6 @@ class User:
         self.password = password
         
     def save(self):
-        mongo.db.users.insert_one({"name": self.name, "email": self.email, "password": self.password})
+        mongo.db.users.insert_one(
+            {"name": self.name, "email": self.email, "password": self.password}
+        )
